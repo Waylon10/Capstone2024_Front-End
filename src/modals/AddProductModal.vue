@@ -18,20 +18,20 @@
 
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" id="price" v-model="newProduct.price" step="0.01" required />
+                    <input type="number" id="price" v-model="newProduct.price" step="0.01" min="0" required />
                 </div>
 
-                <label>Select a category:</label>
-  <div v-for="category in categories" :key="category.categoryId">
-    <input 
-      type="radio" 
-      :id="'category-' + category.categoryId"
-      :value="category.categoryId" 
-      v-model="newProduct.categoryId" 
-      required
-    />
-    <label :for="'category-' + category.categoryId">{{ category.name }}</label>
-
+                <div class="control_wrapper">
+                    <label for="category">Category</label>
+                    <div class="control_wrapper">
+                        <ejs-combobox
+    id="combobox"
+    :dataSource="categories ? categories : []"
+    placeholder="Select a category"
+    v-model="newProduct.categoryId"
+    :fields="{ text: 'name', value: 'categoryId' }"
+></ejs-combobox>
+        </div>
                 </div>
 
                 <div class="form-group">
@@ -47,7 +47,12 @@
 </template>
 
 <script>
+import { ComboBoxComponent as EjsCombobox } from "@syncfusion/ej2-vue-dropdowns";
+
 export default {
+    components: {
+        EjsCombobox 
+    },
     props: {
         isVisible: {
             type: Boolean,
@@ -64,7 +69,7 @@ export default {
                 name: '',
                 description: '',
                 price: null,
-                categoryId: '', // Ensure this is initialized to an empty string
+                categoryId: '', 
                 image: null,
             },
         };
@@ -72,20 +77,31 @@ export default {
     methods: {
         handleImageUpload(event) {
             const file = event.target.files[0];
+            console.log(file); 
             this.newProduct.image = file;
         },
         submitProduct() {
-            const formData = new FormData();
-            formData.append('name', this.newProduct.name);
-            formData.append('description', this.newProduct.description);
-            formData.append('price', this.newProduct.price);
-            formData.append('categoryId', this.newProduct.categoryId); // Submit the selected category's ID
+        const formData = new FormData();
+        
+        // Product object
+        const product = {
+            name: this.newProduct.name,
+            description: this.newProduct.description,
+            price: this.newProduct.price.toFixed(2),
+            category: { categoryId: this.newProduct.categoryId }
+        };
+
+        // Convert object as JSON blob
+        formData.append('product', new Blob([JSON.stringify(product)], { type: "application/json" }));
+
+        if (this.newProduct.image) {
             formData.append('image', this.newProduct.image);
+        }
 
-            this.$emit('add-product', formData); // Emit formData
-            this.closeModal(); // Close the modal after emitting
-        },
-
+        console.log('Form Data:', formData);
+        this.$emit('add-product', formData);
+        this.closeModal();
+    },
         closeModal() {
             this.$emit('close');
         },
@@ -94,7 +110,7 @@ export default {
 </script>
 
 <style scoped>
-/* Modal background */
+
 .modal {
     display: block;
     position: fixed;
@@ -106,7 +122,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Modal content */
+
 .modal-content {
     position: relative;
     margin: 10% auto;
@@ -117,7 +133,6 @@ export default {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Close button */
 .close {
     position: absolute;
     top: 10px;
@@ -126,7 +141,6 @@ export default {
     cursor: pointer;
 }
 
-/* Form styling */
 .form-group {
     margin-bottom: 15px;
 }
@@ -149,7 +163,6 @@ textarea {
     font-size: 16px;
 }
 
-/* Buttons styling */
 .add-button {
     background-color: #3498db;
     color: white;
@@ -177,11 +190,7 @@ textarea {
     background-color: #c0392b;
 }
 
-input[type="radio"] {
-  margin-right: 10px;
-}
-
-div {
-  margin-bottom: 10px;
-}
+@import '~@syncfusion/ej2-base/styles/material.css';
+@import '~@syncfusion/ej2-inputs/styles/material.css';
+@import '~@syncfusion/ej2-vue-dropdowns/styles/material.css';
 </style>
