@@ -113,7 +113,7 @@ export default {
     async addProduct(formData) {
       try {
         await createProduct(formData);
-        await this.fetchProducts();
+        await this.fetchProducts(); // Refresh the product list after addition
         this.closeAddModal();
       } catch (error) {
         console.error('Error adding product:', error);

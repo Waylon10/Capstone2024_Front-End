@@ -16,6 +16,12 @@
           <label for="password">Password</label>
         </div>
       </div>
+      <div class="row">
+        <label>
+          <input type="checkbox" v-model="isAdmin" />
+          <span>Login as Admin</span>
+        </label>
+      </div>
       <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>
       <button class="btn btn-secondary waves-effect waves-light" type="button" @click="cancel">Back</button>
     </form>
@@ -24,7 +30,7 @@
 </template>
 
 <script>
-import { loginAdmin } from '@/services/loginService'; 
+import { loginUser } from '@/services/loginService';
 
 export default {
   name: 'LoginPage',
@@ -32,30 +38,35 @@ export default {
     return {
       username: '',
       password: '',
-      message: ''
+      message: '',
+      isAdmin: false // Add a flag to determine if the user is an admin
     };
   },
   methods: {
     async login() {
-  try {
-    const loginData = {
-      username: this.username,
-      password: this.password
-    };
-    const response = await loginAdmin(loginData);
+      try {
+        const loginData = {
+          username: this.username,
+          password: this.password
+        };
+        const response = await loginUser(loginData, this.isAdmin);
 
-    if (response.status === 200) {
-      this.$router.push({ name: 'AdminDashboard' });
-    } else if (response.status === 412) {
-      this.message = 'Invalid email or password.';
-    } else {
-      this.message = `An error occurred: ${response.status}`;
-    }
-  } catch (error) {
-    // Detailed error message
-    this.message = `Failed to login: ${error.response ? error.response.data.message : 'Connection error'}`;
-  }
-},
+        if (response && response.role) {
+          const { role } = response;
+          if (role === 'admin') {
+            this.$router.push({ name: 'AdminDashboard' });
+          } else if (role === 'customer') {
+            this.$router.push({ name: 'HomePage' });
+          } else {
+            this.message = 'Unknown user role.';
+          }
+        } else {
+          this.message = 'Invalid email or password.';
+        }
+      } catch (error) {
+        this.message = `Failed to login: ${error.message}`;
+      }
+    },
     cancel() {
       window.history.back();
     }

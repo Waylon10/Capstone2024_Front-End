@@ -84,7 +84,7 @@ export default {
     },
     // Construct the image URL for the product
     getProductImage(productId) {
-      return `http://localhost:5119/products/${productId}/image`;
+      return `http://localhost:5119/ecommerce/products/${productId}/image`;
     },
     sortBy(key) {
       this.sortKey = key;
