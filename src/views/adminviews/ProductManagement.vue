@@ -2,7 +2,6 @@
 <template>
   <div class="management-section">
     <h3>Manage Products</h3>
-    <button @click="openAddModal">Add Product</button>
     <table>
       <thead>
         <tr>
@@ -20,7 +19,7 @@
           <td>{{ product.category.name }}</td>
           <td>{{ 'R' + product.price }}</td>
           <td>
-            <button @click="openUpdateModal(product)">Update</button>
+            <button @click="openAddModal">Add Product</button>
             <button @click="removeProduct(product.productId)">Delete</button>
           </td>
         </tr>

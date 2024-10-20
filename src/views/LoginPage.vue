@@ -16,16 +16,20 @@
           <label for="password">Password</label>
         </div>
       </div>
-      <div class="row">
+      <div class="row center-align">
         <label>
           <input type="checkbox" v-model="isAdmin" />
           <span>Login as Admin</span>
         </label>
       </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>
-      <button class="btn btn-secondary waves-effect waves-light" type="button" @click="cancel">Back</button>
+      <div class="row center-align">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>
+      </div>
     </form>
-    <p v-if="message">{{ message }}</p>
+    <div class="row center-align">
+      <p v-if="message">{{ message }}</p>
+      <p>Don't have an account? <router-link to="/register">Register here</router-link></p>
+    </div>
   </div>
 </template>
 
@@ -51,8 +55,13 @@ export default {
         };
         const response = await loginUser(loginData, this.isAdmin);
 
-        if (response && response.role) {
+        console.log("Login response:", response); // Log the response
+
+        if (response.error) {
+          this.message = response.error;
+        } else if (response && response.role) {
           const { role } = response;
+          localStorage.setItem('token', response.token); // Store the token
           if (role === 'admin') {
             this.$router.push({ name: 'AdminDashboard' });
           } else if (role === 'customer') {
@@ -64,16 +73,16 @@ export default {
           this.message = 'Invalid email or password.';
         }
       } catch (error) {
+        console.log("Login error:", error); // Log the error
         this.message = `Failed to login: ${error.message}`;
       }
-    },
-    cancel() {
-      window.history.back();
     }
   }
 };
 </script>
 
 <style scoped>
-/* Styles remain the same */
+.center-align {
+  text-align: center;
+}
 </style>
