@@ -12,12 +12,24 @@ export function getCustomers() {
 }
 
 export async function createCustomer(newCustomer) {
-  return await axios.post(`${API_URL}register`, newCustomer)
-    .then(response => response.data)
-    .catch(error => {
-      console.error('Error creating customer:', error);
-      throw error;
-    });
+    const customerPayload = {
+        firstName: newCustomer.firstName,
+        lastName: newCustomer.lastName,
+        password: newCustomer.password,
+        contact: {
+            email: newCustomer.email,
+            phoneNumber: newCustomer.phoneNumber
+        }
+    };
+
+    console.log('Sending customer payload:', customerPayload);
+
+    return await axios.post(`${API_URL}register`, customerPayload)
+        .then(response => response.data)
+        .catch(error => {
+            console.error('Error creating customer:', error);
+            throw error;
+        });
 }
 
 export function deleteCustomer(userId) {
