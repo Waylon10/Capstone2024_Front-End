@@ -1,5 +1,6 @@
 <template>
   <div class="management-section">
+    <AdminNav />
     <h3>Manage Categories</h3>
     <button @click="openAddModal">Add Category</button>
 
@@ -82,8 +83,12 @@
 
 <script>
 import { getCategories, deleteCategory, updateCategory, createCategory } from '@/services/categoryService';
+import AdminNav from '@/components/AdminNav.vue';
 
 export default {
+  components: {
+    AdminNav
+  },
   data() {
     return {
       categories: [],

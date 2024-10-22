@@ -1,5 +1,6 @@
 <template>
   <div class="about-container">
+    <NavBar />
     <div class="hero">
       <h1>About Us</h1>
     </div>
@@ -9,7 +10,7 @@
     </div>
     <div class="contact-details">
       <h2>Contact Us</h2>
-      <p><i class="fas fa-phone"></i> Phone: (123) 456-7890</p>
+      <p><i class="fas fa-phone"></i> Phone: +27 87 098 1234</p>
       <p><i class="fas fa-envelope"></i> Email: info@hardwarestore.com</p>
       <p><i class="fas fa-map-marker-alt"></i> Address: 123 Hardware St, Tooltown, TX</p>
     </div>
@@ -24,8 +25,13 @@
 </template>
 
 <script>
+import NavBar from '@/components/NavBar.vue';
+
 export default {
   name: 'AboutPage',
+  components: {
+    NavBar
+  },
   methods: {
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });

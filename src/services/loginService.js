@@ -8,15 +8,15 @@ export async function loginUser(loginData, isAdmin) {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: false // Ensure credentials are not included in the request
+      withCredentials: false // No credentials in this case
     });
 
-    console.log("Axios response:", response); // Log the Axios response
+    console.log("Axios response:", response);
 
-    return response.data; // Return the response data directly
+    return response.data;
   } catch (error) {
-    console.log("Axios error:", error); // Log the error
-    if (error.response && error.response.status === 401) {
+    console.log("Axios error:", error);
+    if (error.response && error.response.status === 401) { // Troubleshoot default sign-in
       return { error: "Invalid email or password." };
     } else {
       return { error: "Login failed. Please check your connection." };

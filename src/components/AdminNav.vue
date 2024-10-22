@@ -1,23 +1,24 @@
 <template>
   <nav class="navbar">
     <div class="navbar-brand">
-      <router-link to="/admin">Admin Home</router-link>
+      <router-link to="/admin" class="home-button">
+        <i class="material-icons" style="font-size: 2em;">home</i>
+      </router-link>
+    </div>
+    <div class="navbar-menu">
+      <a href="#" @click="goBack" class="back-button">
+        <i class="material-icons" style="font-size: 2em;">arrow_back</i>
+      </a>
     </div>
   </nav>
 </template>
 
 <script>
 export default {
-  computed: {
-    isLoggedIn() {
-      return this.$root.user.isLoggedIn;
-    },
-    isAdmin() {
-      return this.$root.user.role === 'admin';
-    },
-    userName() {
-      return this.$root.user.name;
-    },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>
@@ -39,5 +40,27 @@ export default {
 
 .navbar a:hover {
   text-decoration: underline;
+}
+
+.home-button {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.home-button:hover {
+  color: #007bff;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.back-button:hover {
+  color: #007bff;
 }
 </style>

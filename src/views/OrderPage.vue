@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <NavBar />
     <h1>Your Orders</h1>
     <ul class="list-group">
       <li v-for="order in orders" :key="order.id" class="list-group-item">
@@ -15,7 +16,13 @@
 </template>
 
 <script>
+import NavBar from '@/components/NavBar.vue';
+
 export default {
+  name: 'OrderPage',
+  components: {
+    NavBar
+  },
   data() {
     return {
       orders: [

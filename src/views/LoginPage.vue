@@ -43,7 +43,7 @@ export default {
       username: '',
       password: '',
       message: '',
-      isAdmin: false // Add a flag to determine if the user is an admin
+      isAdmin: false // admin flag
     };
   },
   methods: {
@@ -55,7 +55,7 @@ export default {
         };
         const response = await loginUser(loginData, this.isAdmin);
 
-        console.log("Login response:", response); // Log the response
+        console.log("Login response:", response);
 
         if (response.error) {
           this.message = response.error;

@@ -14,7 +14,7 @@
       </li>
     </ul>
     <div class="total mt-3">
-      <strong>Total: ${{ total }}</strong>
+      <strong>Total: R{{ total }}</strong>
     </div>
     <button @click="checkout" class="btn btn-primary mt-3">Proceed to Checkout</button>
     <button @click="goBack" class="btn btn-secondary mt-3">Back</button>

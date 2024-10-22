@@ -2,14 +2,7 @@
   <div id="app" class="app-container">
     <nav>
       <div class="nav-wrapper">
-        <ul id="nav-mobile" class="left">
-          <li>
-            <router-link :to="homeRoute">
-              <i class="material-icons">home</i>
-            </router-link>
-          </li>
-        </ul>
-        <a href="#" class="brand-logo">Hardware Store</a>
+        <a href="#" class="brand-logo center">Hardware Store</a>
         <ul id="nav-mobile" class="right"></ul>
       </div>
     </nav>
@@ -70,13 +63,13 @@ export default {
     logout() {
       if (confirm('Are you sure you want to logout?')) {
         this.isLoggedIn = false;
-        this.user = { name: '', surname: '', role: '' };
+        this.user = {name: '', surname: '', role: ''};
         localStorage.removeItem('token'); // Remove the token
         this.$router.push('/'); // Redirect to login page
       }
     },
     handleRegistrationSuccess() {
-      this.$router.push({ name: 'HomePage' });
+      this.$router.push({name: 'HomePage'});
     }
   },
   computed: {
@@ -112,15 +105,9 @@ export default {
   align-items: center;
 }
 
-ul#nav-mobile.left {
-  margin: 0;
-  padding: 0;
-  flex: 1;
-}
-
-.brand-logo {
+.brand-logo.center {
   color: white;
-  flex: 2;
+  flex: 1;
   text-align: center;
 }
 

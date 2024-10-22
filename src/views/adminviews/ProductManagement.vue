@@ -1,7 +1,9 @@
 <!-- src/views/adminviews/ProductManagement.vue -->
 <template>
   <div class="management-section">
+    <AdminNav />
     <h3>Manage Products</h3>
+    <button @click="openAddModal">Add Product</button>
     <table>
       <thead>
         <tr>
@@ -19,7 +21,6 @@
           <td>{{ product.category.name }}</td>
           <td>{{ 'R' + product.price }}</td>
           <td>
-            <button @click="openAddModal">Add Product</button>
             <button @click="removeProduct(product.productId)">Delete</button>
           </td>
         </tr>
@@ -45,13 +46,15 @@
 <script>
 import AddProductModal from '@/modals/AddProductModal.vue';
 import UpdateProductModal from '@/modals/UpdateProductModal.vue';
+import AdminNav from '@/components/AdminNav.vue';
 import { getProducts, deleteProduct, createProduct, updateProduct } from '@/services/productService';
 import { getCategories } from '@/services/categoryService';
 
 export default {
   components: {
     AddProductModal,
-    UpdateProductModal
+    UpdateProductModal,
+    AdminNav
   },
   data() {
     return {

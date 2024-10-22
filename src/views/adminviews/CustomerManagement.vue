@@ -1,7 +1,7 @@
 <template>
   <div class="management-section">
+    <AdminNav />
     <h3>Manage Customers</h3>
-    <!-- <button @click="openAddModal">Add Customer</button>  -->
     <input type="text" v-model="searchQuery" placeholder="Search customers..." />
     <table>
       <thead>
@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import AddCustomerModal from '@/modals/AddCustomerModal.vue';
+import AdminNav from "@/components/AdminNav.vue";
 import UpdateCustomerModal from '@/modals/UpdateCustomerModal.vue';
 import { getCustomers, deleteCustomer, updateCustomer, createCustomer } from '@/services/customerService';
 
 export default {
   components: {
-    AddCustomerModal,
-    UpdateCustomerModal
+    UpdateCustomerModal,
+    AdminNav
   },
   data() {
     return {

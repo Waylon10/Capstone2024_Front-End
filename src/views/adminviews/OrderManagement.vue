@@ -1,5 +1,6 @@
 <template>
   <div class="management-section">
+    <AdminNav />
     <h3>Manage Orders</h3>
     <table>
       <thead>
@@ -27,7 +28,12 @@
 </template>
 
 <script>
+import AdminNav from "@/components/AdminNav.vue";
+
 export default {
+  components: {
+    AdminNav
+  },
   data() {
     return {
       orders: [

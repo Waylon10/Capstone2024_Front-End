@@ -8,9 +8,3 @@ export async function getUserDetails(token) {
     });
     return response.data;
 }
-
-export async function logoutUser() {
-    // Send a request to the server to invalidate the token
-    const response = await axios.post('/ecommerce/user/logout');
-    return response.data;
-}
